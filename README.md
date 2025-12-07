@@ -1,6 +1,6 @@
 # PawMart - Pet Adoption & Care Platform
 
-**Live Site URL:** [PawMart Live](https://your-live-site-url.com)
+**Live Site URL:** [PawMart Live](https://paw-mart-client-ugad.vercel.app)
 
 ## About PawMart
 
