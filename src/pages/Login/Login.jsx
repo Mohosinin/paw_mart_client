@@ -20,12 +20,12 @@ const Login = () => {
         signIn(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user);
+
                 toast.success('User Login Successful');
                 navigate(from, { replace: true });
             })
             .catch(error => {
-                console.log(error);
+
                 toast.error(error.message);
             })
     }
@@ -33,13 +33,13 @@ const Login = () => {
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
-                console.log(result.user);
+
                 // TODO: Save user to DB if needed
                 toast.success('Google Login Successful');
                 navigate(from, { replace: true });
             })
             .catch(error => {
-                console.log(error);
+
                 toast.error(error.message);
             })
     }

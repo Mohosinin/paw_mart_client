@@ -33,17 +33,17 @@ const Register = () => {
         createUser(email, password)
             .then(result => {
                 const loggedUser = result.user;
-                console.log(loggedUser);
+
                 updateUserProfile(name, photo)
                     .then(() => {
                         // Create user entry in DB (optional but good practice)
                         toast.success('User Created Successfully');
                         navigate('/');
                     })
-                    .catch(error => console.log(error))
+                    .catch(error => {})
             })
             .catch(error => {
-                console.log(error);
+
                 toast.error(error.message);
             })
     }
@@ -51,12 +51,12 @@ const Register = () => {
     const handleGoogleSignIn = () => {
         googleSignIn()
             .then(result => {
-                console.log(result.user);
+
                 toast.success('Google Login Successful');
                 navigate('/');
             })
             .catch(error => {
-                console.log(error);
+
                 toast.error(error.message);
             })
     }
