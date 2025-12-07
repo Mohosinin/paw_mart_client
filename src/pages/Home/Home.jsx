@@ -3,7 +3,7 @@ import { FaArrowRight, FaMapMarkerAlt } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Typewriter } from 'react-simple-typewriter';
-import { motion } from "framer-motion"; // eslint-disable-line no-unused-vars
+import { motion } from "framer-motion";
 
 const Home = () => {
     const [recentListings, setRecentListings] = useState([]);
@@ -19,7 +19,7 @@ const Home = () => {
     ];
 
     useEffect(() => {
-        axios.get('${import.meta.env.VITE_API_URL}/listings?limit=6')
+        axios.get(`${import.meta.env.VITE_API_URL}/listings?limit=6`)
             .then(res => setRecentListings(res.data));
     }, []);
 
@@ -216,7 +216,7 @@ const Home = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <p className="italic text-base-content/80">"Adopting changed my life for the better! The process was smooth and I found my best friend."</p>
+                                <p className="italic text-base-content/80">"Adopting changed my life for the better! The process was smooth and I found my best friend and a buddy."</p>
                             </div>
                         </div>
                     ))}

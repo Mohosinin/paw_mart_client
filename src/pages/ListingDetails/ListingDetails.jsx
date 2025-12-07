@@ -38,7 +38,7 @@ const ListingDetails = () => {
             additionalNotes: notes
         };
 
-        axios.post('${import.meta.env.VITE_API_URL}/orders', orderData)
+        axios.post(`${import.meta.env.VITE_API_URL}/orders`, orderData)
             .then(res => {
                 if(res.data.insertedId){
                     toast.success('Order Placed Successfully');
