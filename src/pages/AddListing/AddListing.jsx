@@ -22,6 +22,10 @@ const AddListing = () => {
                     reset();
                 }
             })
+            .catch(error => {
+                console.error('Error adding listing:', error);
+                toast.error(error.response?.data?.message || 'Failed to add listing. Please try again.');
+            });
     };
 
     return (

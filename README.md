@@ -68,6 +68,7 @@ PORT=5000
 
 Create a `.env` file in the client directory with your Firebase config:
 ```
+VITE_API_URL=your_backend_api_url
 VITE_FIREBASE_API_KEY=your_api_key
 VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
 VITE_FIREBASE_PROJECT_ID=your_project_id

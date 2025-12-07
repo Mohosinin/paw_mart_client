@@ -13,7 +13,11 @@ const ListingDetails = () => {
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL}/listings/${id}`)
-            .then(res => setListing(res.data));
+            .then(res => setListing(res.data))
+            .catch(error => {
+                console.error('Error fetching listing:', error);
+                toast.error('Failed to load listing details');
+            });
     }, [id]);
 
     const handleOrder = (event) => {
@@ -45,6 +49,10 @@ const ListingDetails = () => {
                     document.getElementById('order_modal').close();
                 }
             })
+            .catch(error => {
+                console.error('Error placing order:', error);
+                toast.error(error.response?.data?.message || 'Failed to place order. Please try again.');
+            });
     };
 
     if (!listing) return <div className="text-center mt-20">Loading...</div>;

@@ -30,6 +30,10 @@ const UpdateListing = () => {
                     navigate('/my-listings');
                 }
             })
+            .catch(error => {
+                console.error('Error updating listing:', error);
+                toast.error(error.response?.data?.message || 'Failed to update listing. Please try again.');
+            });
     };
 
     return (

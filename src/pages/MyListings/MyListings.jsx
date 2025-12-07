@@ -13,7 +13,10 @@ const MyListings = () => {
     useEffect(() => {
         if(user?.email){
             axios.get(`${import.meta.env.VITE_API_URL}/my-listings?email=${user.email}`)
-                .then(res => setListings(res.data));
+                .then(res => setListings(res.data))
+                .catch(error => {
+                    console.error('Error fetching listings:', error);
+                });
         }
     }, [user]);
 
@@ -40,6 +43,14 @@ const MyListings = () => {
                             setListings(remaining);
                         }
                     })
+                    .catch(error => {
+                        console.error('Error deleting listing:', error);
+                        Swal.fire(
+                            'Error!',
+                            error.response?.data?.message || 'Failed to delete listing. Please try again.',
+                            'error'
+                        );
+                    });
             }
         })
     }
