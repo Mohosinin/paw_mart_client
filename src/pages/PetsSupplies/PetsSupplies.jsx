@@ -9,7 +9,7 @@ const PetsSupplies = () => {
     const [category, setCategory] = useState('');
 
     useEffect(() => {
-        axios.get('http://localhost:5000/listings')
+        axios.get('${import.meta.env.VITE_API_URL}/listings')
             .then(res => setListings(res.data));
     }, []);
 

@@ -43,7 +43,7 @@ const router = createBrowserRouter([
       {
         path: "/listings/:id",
         element: <PrivateRoute><ListingDetails /></PrivateRoute>,
-        loader: ({params}) => fetch(`http://localhost:5000/listings/${params.id}`)
+        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/listings/${params.id}`)
       },
       {
         path: "/add-listing",
@@ -60,7 +60,7 @@ const router = createBrowserRouter([
       {
         path: "/update-listing/:id",
         element: <PrivateRoute><UpdateListing /></PrivateRoute>,
-        loader: ({params}) => fetch(`http://localhost:5000/listings/${params.id}`)
+        loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/listings/${params.id}`)
       }
     ],
 

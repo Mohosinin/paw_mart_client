@@ -19,7 +19,7 @@ const Home = () => {
     ];
 
     useEffect(() => {
-        axios.get('http://localhost:5000/listings?limit=6')
+        axios.get('${import.meta.env.VITE_API_URL}/listings?limit=6')
             .then(res => setRecentListings(res.data));
     }, []);
 

@@ -10,7 +10,7 @@ const CategoryFilteredProduct = () => {
 
     useEffect(() => {
         setLoading(true);
-        axios.get(`http://localhost:5000/listings?category=${categoryName}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/listings?category=${categoryName}`)
             .then(res => {
                 setListings(res.data);
                 setLoading(false);

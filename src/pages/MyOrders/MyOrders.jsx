@@ -12,7 +12,7 @@ const MyOrders = () => {
 
     useEffect(() => {
         if(user?.email){
-            axios.get(`http://localhost:5000/my-orders?email=${user.email}`)
+            axios.get(`${import.meta.env.VITE_API_URL}/my-orders?email=${user.email}`)
                 .then(res => setOrders(res.data));
         }
     }, [user]);
@@ -28,7 +28,7 @@ const MyOrders = () => {
             confirmButtonText: 'Yes, cancel order!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/orders/${id}`)
+                axios.delete(`${import.meta.env.VITE_API_URL}/orders/${id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
                             Swal.fire(

@@ -12,7 +12,7 @@ const MyListings = () => {
 
     useEffect(() => {
         if(user?.email){
-            axios.get(`http://localhost:5000/my-listings?email=${user.email}`)
+            axios.get(`${import.meta.env.VITE_API_URL}/my-listings?email=${user.email}`)
                 .then(res => setListings(res.data));
         }
     }, [user]);
@@ -28,7 +28,7 @@ const MyListings = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://localhost:5000/listings/${id}`)
+                axios.delete(`${import.meta.env.VITE_API_URL}/listings/${id}`)
                     .then(res => {
                         if (res.data.deletedCount > 0) {
                             Swal.fire(

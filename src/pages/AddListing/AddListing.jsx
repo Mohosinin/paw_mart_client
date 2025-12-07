@@ -15,7 +15,7 @@ const AddListing = () => {
             email: user?.email,
         };
         
-        axios.post('http://localhost:5000/listings', listingData)
+        axios.post('${import.meta.env.VITE_API_URL}/listings', listingData)
             .then(res => {
                 if(res.data.insertedId){
                     toast.success('Listing Added Successfully');

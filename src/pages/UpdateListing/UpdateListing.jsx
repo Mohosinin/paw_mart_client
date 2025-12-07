@@ -23,7 +23,7 @@ const UpdateListing = () => {
             price: parseFloat(data.price),
         };
         
-        axios.put(`http://localhost:5000/listings/${listing._id}`, listingData)
+        axios.put(`${import.meta.env.VITE_API_URL}/listings/${listing._id}`, listingData)
             .then(res => {
                 if(res.data.modifiedCount > 0 || res.data.upsertedCount > 0){
                     toast.success('Listing Updated Successfully');

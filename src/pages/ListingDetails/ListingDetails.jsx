@@ -12,7 +12,7 @@ const ListingDetails = () => {
 
 
     useEffect(() => {
-        axios.get(`http://localhost:5000/listings/${id}`)
+        axios.get(`${import.meta.env.VITE_API_URL}/listings/${id}`)
             .then(res => setListing(res.data));
     }, [id]);
 
@@ -38,7 +38,7 @@ const ListingDetails = () => {
             additionalNotes: notes
         };
 
-        axios.post('http://localhost:5000/orders', orderData)
+        axios.post('${import.meta.env.VITE_API_URL}/orders', orderData)
             .then(res => {
                 if(res.data.insertedId){
                     toast.success('Order Placed Successfully');
