@@ -4,26 +4,33 @@ import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
 import toast from "react-hot-toast";
 import ImageUpload from "../../components/ui/ImageUpload";
+import { FiUpload, FiLink } from "react-icons/fi";
 
 const AddListing = () => {
     const { user } = useContext(AuthContext);
     const { register, handleSubmit, reset } = useForm();
     const [imageURL, setImageURL] = useState("");
     const [loading, setLoading] = useState(false);
+    const [imageMode, setImageMode] = useState("upload"); // "upload" or "url"
 
     const onSubmit = data => {
-        if (!imageURL) {
-            toast.error('Please upload an image for your listing');
+        const finalImageURL = imageMode === "upload" ? imageURL : data.imageUrl;
+        
+        if (!finalImageURL) {
+            toast.error('Please provide an image for your listing');
             return;
         }
 
         setLoading(true);
         const listingData = {
             ...data,
-            image: imageURL,
+            image: finalImageURL,
             price: parseFloat(data.price),
             email: user?.email,
         };
+        
+        // Remove imageUrl from data as we use 'image' field
+        delete listingData.imageUrl;
         
         axios.post(`${import.meta.env.VITE_API_URL}/listings`, listingData)
             .then(res => {
@@ -46,15 +53,52 @@ const AddListing = () => {
             <div className="card w-full bg-base-100 shadow-2xl border border-base-200">
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body p-8 space-y-4">
                     
-                    {/* Section 1: Image Upload */}
+                    {/* Section 1: Image */}
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text font-semibold">Listing Image</span>
                         </label>
-                        <ImageUpload 
-                            onImageUpload={(url) => setImageURL(url)}
-                            currentImage={imageURL}
-                        />
+                        
+                        {/* Toggle between upload and URL */}
+                        <div className="tabs tabs-boxed bg-base-200 p-1 mb-4 w-fit">
+                            <button
+                                type="button"
+                                onClick={() => setImageMode("upload")}
+                                className={`tab gap-2 ${imageMode === "upload" ? "tab-active bg-primary text-primary-content" : ""}`}
+                            >
+                                <FiUpload className="w-4 h-4" />
+                                Upload Image
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setImageMode("url")}
+                                className={`tab gap-2 ${imageMode === "url" ? "tab-active bg-primary text-primary-content" : ""}`}
+                            >
+                                <FiLink className="w-4 h-4" />
+                                Image URL
+                            </button>
+                        </div>
+
+                        {imageMode === "upload" ? (
+                            <ImageUpload 
+                                onImageUpload={(url) => setImageURL(url)}
+                                currentImage={imageURL}
+                            />
+                        ) : (
+                            <div>
+                                <input 
+                                    type="url" 
+                                    {...register("imageUrl")} 
+                                    placeholder="https://example.com/image.jpg" 
+                                    className="input input-bordered w-full" 
+                                />
+                                <label className="label">
+                                    <span className="label-text-alt text-base-content/60">
+                                        Paste a direct link to an image hosted online
+                                    </span>
+                                </label>
+                            </div>
+                        )}
                     </div>
 
                     {/* Section 2: Basic Info */}
