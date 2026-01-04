@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FiUpload, FiImage, FiX, FiCheck } from 'react-icons/fi';
 
-const IMGBB_API_KEY = '1b5d848d79aaff23083c6e0c6bb33399';
+const IMGBB_API_KEY = import.meta.env.VITE_IMGBB_API_KEY;
 
 const ImageUpload = ({ onImageUpload, currentImage = '', className = '' }) => {
     const [uploading, setUploading] = useState(false);
