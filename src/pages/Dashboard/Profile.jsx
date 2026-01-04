@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { FiEdit3, FiCamera, FiMail, FiUser, FiCalendar, FiMapPin, FiPhone, FiSave } from "react-icons/fi";
 import toast from "react-hot-toast";
+import ImageUpload from "../../components/ui/ImageUpload";
 
 const Profile = () => {
     const { user, updateUserProfile } = useContext(AuthContext);
@@ -19,7 +20,15 @@ const Profile = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    const handleImageUpload = (url) => {
+        setFormData({ ...formData, photoURL: url });
+    };
+
     const handleSave = async () => {
+        if (!formData.photoURL) {
+            toast.error("Please upload a profile photo");
+            return;
+        }
         setLoading(true);
         try {
             await updateUserProfile(formData.displayName, formData.photoURL);
@@ -56,9 +65,9 @@ const Profile = () => {
                                 />
                             </div>
                             {isEditing && (
-                                <button className="absolute bottom-2 right-2 btn btn-circle btn-primary btn-sm shadow-lg">
+                                <div className="absolute bottom-2 right-2 btn btn-circle btn-primary btn-sm shadow-lg">
                                     <FiCamera className="w-4 h-4" />
-                                </button>
+                                </div>
                             )}
                         </div>
 
@@ -192,30 +201,16 @@ const Profile = () => {
                     </div>
                 </div>
 
-                {/* Photo URL (when editing) */}
+                {/* Photo Upload (when editing) */}
                 {isEditing && (
                     <div className="bg-base-100 rounded-2xl p-6 shadow-lg border border-base-200 md:col-span-2">
                         <h3 className="text-xl font-bold mb-4 flex items-center gap-2">
                             <FiCamera className="text-primary" /> Profile Photo
                         </h3>
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text font-medium">Photo URL</span>
-                            </label>
-                            <input
-                                type="url"
-                                name="photoURL"
-                                value={formData.photoURL}
-                                onChange={handleChange}
-                                className="input input-bordered"
-                                placeholder="https://example.com/photo.jpg"
-                            />
-                            <label className="label">
-                                <span className="label-text-alt text-base-content/50">
-                                    Enter a URL to your profile picture
-                                </span>
-                            </label>
-                        </div>
+                        <ImageUpload 
+                            onImageUpload={handleImageUpload}
+                            currentImage={formData.photoURL}
+                        />
                     </div>
                 )}
             </div>
