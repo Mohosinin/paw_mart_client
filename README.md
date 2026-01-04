@@ -1,125 +1,214 @@
-# PawMart - Pet Adoption & Care Platform
+# 🐾 PawMart - Pet Adoption & Care Platform
 
-**Live Site URL:** [PawMart Live](https://paw-mart-client-ugad.vercel.app)
+<div align="center">
 
-## About PawMart
+![PawMart Logo](public/pawmart.svg)
 
-PawMart is a comprehensive pet adoption and pet care marketplace that connects pet lovers with their perfect companions and provides access to premium pet care products. Built with modern web technologies, PawMart offers a seamless experience for both pet adopters and sellers.
+**Find Your Perfect Companion | Shop Premium Supplies | Join Our Community**
 
-## Key Features
+[![Live Demo](https://img.shields.io/badge/Demo-Live-brightgreen?style=for-the-badge)](https://paw-mart-client-ugad.vercel.app)
+[![React](https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react)](https://react.dev/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?style=for-the-badge&logo=tailwindcss)](https://tailwindcss.com/)
 
-- 🐾 **Pet Adoption System** - Browse and adopt pets from local owners with detailed listings including images, descriptions, location, and pickup dates. Pets are available for free adoption while supplies can be purchased.
-
-- 🔐 **Secure Authentication** - Firebase-powered authentication with email/password and Google Sign-In options. Includes password validation (minimum 6 characters, uppercase, and lowercase requirements) with real-time feedback.
-
-- 📝 **Listing Management** - Authenticated users can create, update, and delete their own pet and product listings. Each listing includes comprehensive details like category, price, location, and images with auto-sorted display (newest first).
-
-- 🛒 **Smart Order System** - Place orders with detailed information including buyer details, delivery address, phone number, pickup/delivery date, and additional notes. View all your orders in a dedicated dashboard with PDF export functionality.
-
-- 🎨 **Premium UI/UX** - Modern, responsive design with glassmorphism effects, smooth animations using Framer Motion, auto-changing hero banner carousel, and dynamic typewriter effects. Fully mobile-optimized with a Bangladesh-localized interface.
-
-## Technology Stack
-
-### Frontend
-- **React 19** - Modern UI library
-- **React Router 7** - Client-side routing
-- **TailwindCSS 4** - Utility-first styling
-- **DaisyUI** - Component library
-- **Framer Motion** - Smooth animations
-- **React Hook Form** - Form management
-- **Axios** - HTTP client
-- **React Hot Toast** - Notifications
-- **SweetAlert2** - Beautiful alerts
-- **jsPDF** - PDF generation
-
-### Backend
-- **Node.js & Express** - Server framework
-- **MongoDB** - Database
-- **Firebase Authentication** - User management
-
-## Installation & Setup
-
-### Prerequisites
-- Node.js (v18 or higher)
-- MongoDB
-- Firebase account
-
-### Client Setup
-```bash
-cd client
-npm install
-npm run dev
-```
-
-### Server Setup
-```bash
-cd server
-npm install
-nodemon index.js
-```
-
-### Environment Variables
-
-Create a `.env` file in the server directory:
-```
-DB_URI=your_mongodb_connection_string
-PORT=5000
-```
-
-Create a `.env` file in the client directory with your Firebase config:
-```
-VITE_API_URL=your_backend_api_url
-VITE_FIREBASE_API_KEY=your_api_key
-VITE_FIREBASE_AUTH_DOMAIN=your_auth_domain
-VITE_FIREBASE_PROJECT_ID=your_project_id
-VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-```
-
-## Features in Detail
-
-### User Features
-- Browse all available pets and supplies with advanced filtering
-- Search by name and filter by category
-- View detailed information about each listing
-- Place orders with comprehensive details
-- Download order reports as PDF
-- Manage personal listings and orders
-
-### Seller Features
-- Add new listings with rich details
-- Update existing listings
-- Delete listings with confirmation
-- View all personal listings in a tabular format
-- Track orders placed on their listings
-
-### Design Features
-- Auto-changing hero banner with 5 beautiful pet images
-- Smooth fade transitions between images
-- Glassmorphism effects on cards and modals
-- Responsive navigation with mobile menu
-- Active link highlighting
-- Loading spinners for all async operations
-- Toast notifications for all CRUD operations
-- Bangladesh-localized placeholders and examples
-
-## Pages
-
-- **Home** - Hero banner, categories, recent listings, testimonials
-- **Pets & Supplies** - All listings with search and filter
-- **Category Filtered** - Listings filtered by specific category
-- **Listing Details** - Full details with order modal
-- **Add Listing** - Create new listings (Private)
-- **My Listings** - Manage your listings (Private)
-- **My Orders** - View and download orders (Private)
-- **Login/Register** - Authentication pages
-- **404** - Custom error page
-
-## Contact
-
-For any queries or support, please reach out through the contact form on the website.
+</div>
 
 ---
 
+## 🌐 Live Website
+
+**🔗 [https://paw-mart-client-ugad.vercel.app](https://paw-mart-client-ugad.vercel.app)**
+
+---
+
+## 📖 About PawMart
+
+PawMart is a comprehensive pet adoption and pet care marketplace that connects pet lovers with their perfect companions and provides access to premium pet care products. Built with modern web technologies, PawMart offers a seamless experience for both pet adopters, sellers, and administrators.
+
+---
+
+## ✨ Key Features
+
+### � Pet Adoption System
+- Browse and adopt pets from verified local owners
+- Detailed listings with images, descriptions, location, and availability
+- Free adoption for pets, with supplies available for purchase
+
+### 🔐 Secure Authentication
+- Firebase-powered authentication
+- Email/Password and Google Sign-In options
+- Password validation with real-time feedback
+- **Demo Account**: `demo@pawmart.com` / `Demo@123`
+
+### 👨‍💼 Role-Based Access Control
+| Role | Capabilities |
+|------|-------------|
+| **User** | Browse, order, manage personal listings |
+| **Seller** | All user features + create/manage listings |
+| **Admin** | Full access + manage users, view all orders, admin dashboard |
+
+### 📝 Listing Management
+- Create, update, and delete pet/product listings
+- Rich details: category, price, location, images
+- Auto-sorted display (newest first)
+
+### 🛒 Smart Order System
+- Place orders with delivery details
+- Track order status (Pending → Processing → Completed)
+- Download order reports as PDF
+
+### 🎨 Premium UI/UX
+- **Modern Design**: Blue gradient color scheme
+- **Glassmorphism Effects**: Beautiful card designs
+- **Smooth Animations**: Powered by Framer Motion
+- **Auto-Carousel**: Hero banner with stunning pet images
+- **Typewriter Effect**: Dynamic text animations
+- **Dark/Light Theme**: Toggle between themes
+- **Fully Responsive**: Mobile-first design
+
+---
+
+## 🛠️ Technology Stack
+
+| Category | Technologies |
+|----------|-------------|
+| **Framework** | React 19, Vite 7 |
+| **Routing** | React Router 7 |
+| **Styling** | TailwindCSS 4, DaisyUI |
+| **Animations** | Framer Motion |
+| **Forms** | React Hook Form |
+| **HTTP Client** | Axios |
+| **Authentication** | Firebase Auth |
+| **Notifications** | React Hot Toast, SweetAlert2 |
+| **PDF Export** | jsPDF |
+| **Icons** | React Icons |
+
+---
+
+## 📄 Pages Overview
+
+| Page | Access | Description |
+|------|--------|-------------|
+| **Home** | Public | Hero, categories, featured listings, testimonials |
+| **About** | Public | Company story, team, statistics, values |
+| **Pets & Supplies** | Public | Browse all listings with search & filter |
+| **Category View** | Public | Filter by specific category |
+| **Listing Details** | Public | Full details with order modal |
+| **Login/Register** | Public | Authentication pages |
+| **Dashboard** | Private | User dashboard with stats |
+| **My Listings** | Private | Manage personal listings |
+| **Add Listing** | Seller+ | Create new listings |
+| **My Orders** | Private | View and download orders |
+| **Manage Users** | Admin | User management panel |
+| **All Orders** | Admin | View all platform orders |
+
+---
+
+## 🚀 Installation & Setup
+
+### Prerequisites
+- Node.js v18+
+- npm or yarn
+- Firebase account
+
+### 1. Clone the Repository
+```bash
+git clone https://github.com/your-username/paw_mart_client.git
+cd paw_mart_client
+```
+
+### 2. Install Dependencies
+```bash
+npm install
+```
+
+### 3. Configure Environment Variables
+Create a `.env` file in the root directory:
+```env
+# Firebase Configuration
+VITE_apiKey=your_firebase_api_key
+VITE_authDomain=your_firebase_auth_domain
+VITE_projectId=your_firebase_project_id
+VITE_storageBucket=your_firebase_storage_bucket
+VITE_messagingSenderId=your_firebase_messaging_sender_id
+VITE_appId=your_firebase_app_id
+
+# Backend API URL
+VITE_API_URL=https://your-server-url.vercel.app
+```
+
+### 4. Run Development Server
+```bash
+npm run dev
+```
+
+### 5. Build for Production
+```bash
+npm run build
+```
+
+---
+
+## 🌐 Deployment (Vercel)
+
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Add environment variables in Vercel dashboard
+4. Deploy automatically on push
+
+---
+
+## 📂 Project Structure
+
+```
+client/
+├── public/
+│   └── pawmart.svg          # Favicon
+├── src/
+│   ├── components/          # Reusable components
+│   │   └── ui/              # UI components (Spinner, Skeleton, etc.)
+│   ├── firebase/            # Firebase configuration
+│   ├── layouts/             # Layout components
+│   ├── pages/               # Page components
+│   │   ├── Home/
+│   │   ├── About/
+│   │   ├── Login/
+│   │   ├── Register/
+│   │   └── Dashboard/
+│   ├── providers/           # Context providers
+│   ├── routes/              # Route configurations
+│   └── main.jsx             # Entry point
+├── index.html
+├── vercel.json              # Vercel configuration
+└── package.json
+```
+
+---
+
+## 🎯 Demo Credentials
+
+| Role | Email | Password |
+|------|-------|----------|
+| **User** | demo@pawmart.com | Demo@123 |
+| **Admin** | admin@admin.com | (Contact admin) |
+
+---
+
+## 📞 Contact & Support
+
+For any queries or support, please visit our [About page](https://paw-mart-client-ugad.vercel.app/about) or reach out through the contact form.
+
+---
+
+## 📜 License
+
+This project is developed as part of a web development assignment.
+
+---
+
+<div align="center">
+
 **Developed with ❤️ for pet lovers everywhere**
+
+🐕 🐈 🐦 🐰 🐹
+
+</div>
