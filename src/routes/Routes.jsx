@@ -11,6 +11,7 @@ import AddListing from "../pages/AddListing/AddListing";
 import MyListings from "../pages/MyListings/MyListings";
 import MyOrders from "../pages/MyOrders/MyOrders";
 import PrivateRoute from "./PrivateRoute";
+import SellerRoute from "./SellerRoute";
 import AdminRoute from "./AdminRoute";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
 import UpdateListing from "../pages/UpdateListing/UpdateListing";
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
     element: <MainLayout />,
     errorElement: <ErrorPage />,
     children: [
+      // Public Routes
       {
         path: "/",
         element: <Home />,
@@ -66,14 +68,14 @@ const router = createBrowserRouter([
         path: "/faq",
         element: <FAQ />,
       },
-      // Legacy routes (for backward compatibility)
+      // Legacy routes (for backward compatibility) - Protected
       {
         path: "/add-listing",
-        element: <PrivateRoute><AddListing /></PrivateRoute>,
+        element: <SellerRoute><AddListing /></SellerRoute>,
       },
       {
         path: "/my-listings",
-        element: <PrivateRoute><MyListings /></PrivateRoute>,
+        element: <SellerRoute><MyListings /></SellerRoute>,
       },
       {
         path: "/my-orders",
@@ -81,12 +83,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/update-listing/:id",
-        element: <PrivateRoute><UpdateListing /></PrivateRoute>,
+        element: <SellerRoute><UpdateListing /></SellerRoute>,
         loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/listings/${params.id}`)
       }
     ],
   },
-  // Dashboard Routes
+  // Dashboard Routes - All Protected
   {
     path: "/dashboard",
     element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
@@ -105,18 +107,18 @@ const router = createBrowserRouter([
         path: "my-orders",
         element: <MyOrders />,
       },
-      // Seller Routes (accessible by sellers and admins)
+      // Seller Routes (accessible by sellers and admins only)
       {
         path: "my-listings",
-        element: <MyListings />,
+        element: <SellerRoute><MyListings /></SellerRoute>,
       },
       {
         path: "add-listing",
-        element: <AddListing />,
+        element: <SellerRoute><AddListing /></SellerRoute>,
       },
       {
         path: "update-listing/:id",
-        element: <UpdateListing />,
+        element: <SellerRoute><UpdateListing /></SellerRoute>,
         loader: ({params}) => fetch(`${import.meta.env.VITE_API_URL}/listings/${params.id}`)
       },
       // Admin Routes (accessible by admins only)
