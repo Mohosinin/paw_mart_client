@@ -63,7 +63,7 @@ npm run dev
 
 ## 📂 Related Repository
 
-- **Backend API**: [paw_mart_server](https://github.com/mohosinan/paw_mart_server)
+- **Backend API**: [paw_mart_server](https://github.com/Mohosinin/paw_mart_server)
 
 ---
 
