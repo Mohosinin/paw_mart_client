@@ -1,39 +1,49 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useLoaderData, useNavigate } from "react-router";
+import ImageUpload from "../../components/ui/ImageUpload";
 
 const UpdateListing = () => {
-
     const listing = useLoaderData();
     const { register, handleSubmit, reset } = useForm();
     const navigate = useNavigate();
+    const [imageURL, setImageURL] = useState("");
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         if(listing){
             reset(listing);
+            setImageURL(listing.image || "");
         }
     }, [listing, reset]);
 
     const onSubmit = data => {
+        if (!imageURL) {
+            toast.error('Please upload an image for your listing');
+            return;
+        }
+
+        setLoading(true);
         const listingData = {
             ...data,
+            image: imageURL,
             price: parseFloat(data.price),
         };
         
         axios.put(`${import.meta.env.VITE_API_URL}/listings/${listing._id}`, listingData)
             .then(res => {
                 if(res.data.modifiedCount > 0 || res.data.upsertedCount > 0){
-                    toast.success('Listing Updated Successfully');
-                    navigate('/my-listings');
+                    toast.success('Listing Updated Successfully! 🎉');
+                    navigate('/dashboard/my-listings');
                 }
             })
             .catch(error => {
                 console.error('Error updating listing:', error);
                 toast.error(error.response?.data?.message || 'Failed to update listing. Please try again.');
-            });
+            })
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -42,7 +52,18 @@ const UpdateListing = () => {
             <div className="card w-full bg-base-100 shadow-2xl border border-base-200">
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body p-8 space-y-4">
                     
-                    {/* Section 1: Basic Info */}
+                    {/* Section 1: Image Upload */}
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-semibold">Listing Image</span>
+                        </label>
+                        <ImageUpload 
+                            onImageUpload={(url) => setImageURL(url)}
+                            currentImage={imageURL}
+                        />
+                    </div>
+
+                    {/* Section 2: Basic Info */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="form-control">
                             <label className="label">
@@ -63,7 +84,7 @@ const UpdateListing = () => {
                         </div>
                     </div>
 
-                    {/* Section 2: Details */}
+                    {/* Section 3: Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="form-control">
                             <label className="label">
@@ -82,14 +103,6 @@ const UpdateListing = () => {
                         </div>
                     </div>
 
-                    {/* Section 3: Media */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text font-semibold">Image URL</span>
-                        </label>
-                        <input type="url" {...register("image", { required: true })} placeholder="https://example.com/image.jpg" className="input input-bordered w-full" />
-                    </div>
-
                     {/* Section 4: Description */}
                     <div className="form-control">
                         <label className="label">
@@ -99,7 +112,13 @@ const UpdateListing = () => {
                     </div>
 
                     <div className="form-control mt-8">
-                        <button className="btn btn-primary w-full btn-lg shadow-lg shadow-primary/30 hover:shadow-xl transition-all">Update Listing</button>
+                        <button 
+                            type="submit"
+                            className={`btn btn-primary w-full btn-lg shadow-lg shadow-primary/30 hover:shadow-xl transition-all ${loading ? 'loading' : ''}`}
+                            disabled={loading}
+                        >
+                            {loading ? 'Updating...' : 'Update Listing'}
+                        </button>
                     </div>
                 </form>
             </div>

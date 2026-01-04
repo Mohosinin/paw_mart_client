@@ -1,16 +1,26 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
 import toast from "react-hot-toast";
+import ImageUpload from "../../components/ui/ImageUpload";
 
 const AddListing = () => {
     const { user } = useContext(AuthContext);
     const { register, handleSubmit, reset } = useForm();
+    const [imageURL, setImageURL] = useState("");
+    const [loading, setLoading] = useState(false);
 
     const onSubmit = data => {
+        if (!imageURL) {
+            toast.error('Please upload an image for your listing');
+            return;
+        }
+
+        setLoading(true);
         const listingData = {
             ...data,
+            image: imageURL,
             price: parseFloat(data.price),
             email: user?.email,
         };
@@ -18,14 +28,16 @@ const AddListing = () => {
         axios.post(`${import.meta.env.VITE_API_URL}/listings`, listingData)
             .then(res => {
                 if(res.data.insertedId){
-                    toast.success('Listing Added Successfully');
+                    toast.success('Listing Added Successfully! 🎉');
                     reset();
+                    setImageURL("");
                 }
             })
             .catch(error => {
                 console.error('Error adding listing:', error);
                 toast.error(error.response?.data?.message || 'Failed to add listing. Please try again.');
-            });
+            })
+            .finally(() => setLoading(false));
     };
 
     return (
@@ -34,7 +46,18 @@ const AddListing = () => {
             <div className="card w-full bg-base-100 shadow-2xl border border-base-200">
                 <form onSubmit={handleSubmit(onSubmit)} className="card-body p-8 space-y-4">
                     
-                    {/* Section 1: Basic Info */}
+                    {/* Section 1: Image Upload */}
+                    <div className="form-control">
+                        <label className="label">
+                            <span className="label-text font-semibold">Listing Image</span>
+                        </label>
+                        <ImageUpload 
+                            onImageUpload={(url) => setImageURL(url)}
+                            currentImage={imageURL}
+                        />
+                    </div>
+
+                    {/* Section 2: Basic Info */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="form-control">
                             <label className="label">
@@ -55,7 +78,7 @@ const AddListing = () => {
                         </div>
                     </div>
 
-                    {/* Section 2: Details */}
+                    {/* Section 3: Details */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="form-control">
                             <label className="label">
@@ -80,17 +103,6 @@ const AddListing = () => {
                         </div>
                     </div>
 
-                    {/* Section 3: Media */}
-                    <div className="form-control">
-                        <label className="label">
-                            <span className="label-text font-semibold">Image URL</span>
-                        </label>
-                        <input type="url" {...register("image", { required: true })} placeholder="https://example.com/image.jpg" className="input input-bordered w-full" />
-                        <label className="label">
-                            <span className="label-text-alt text-base-content/60">Provide a direct link to an image hosted online.</span>
-                        </label>
-                    </div>
-
                     {/* Section 4: Description */}
                     <div className="form-control">
                         <label className="label">
@@ -108,7 +120,13 @@ const AddListing = () => {
                     </div>
 
                     <div className="form-control mt-8">
-                        <button className="btn btn-primary w-full btn-lg shadow-lg shadow-primary/30 hover:shadow-xl transition-all">Add Listing</button>
+                        <button 
+                            type="submit"
+                            className={`btn btn-primary w-full btn-lg shadow-lg shadow-primary/30 hover:shadow-xl transition-all ${loading ? 'loading' : ''}`}
+                            disabled={loading}
+                        >
+                            {loading ? 'Adding Listing...' : 'Add Listing'}
+                        </button>
                     </div>
                 </form>
             </div>

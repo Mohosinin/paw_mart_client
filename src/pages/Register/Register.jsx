@@ -3,7 +3,8 @@ import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router";
 import { AuthContext } from "../../providers/AuthProvider";
 import toast from 'react-hot-toast';
-import { FiUser, FiMail, FiLock, FiImage, FiEye, FiEyeOff, FiCheck, FiX } from "react-icons/fi";
+import { FiUser, FiMail, FiLock, FiEye, FiEyeOff, FiCheck, FiX } from "react-icons/fi";
+import ImageUpload from "../../components/ui/ImageUpload";
 
 const Register = () => {
     const { createUser, updateUserProfile, googleSignIn } = useContext(AuthContext);
@@ -11,6 +12,7 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const [password, setPassword] = useState("");
+    const [photoURL, setPhotoURL] = useState("");
 
     // Password validation rules
     const passwordValidation = {
@@ -25,8 +27,12 @@ const Register = () => {
         event.preventDefault();
         const form = event.target;
         const name = form.name.value;
-        const photo = form.photo.value;
         const email = form.email.value;
+
+        if (!photoURL) {
+            toast.error('Please upload a profile photo');
+            return;
+        }
 
         if (!isPasswordValid) {
             toast.error('Please meet all password requirements');
@@ -36,7 +42,7 @@ const Register = () => {
         setLoading(true);
         createUser(email, password)
             .then(result => {
-                updateUserProfile(name, photo)
+                updateUserProfile(name, photoURL)
                     .then(() => {
                         toast.success('Account created successfully! 🎉');
                         navigate('/');
@@ -93,6 +99,17 @@ const Register = () => {
                     </div>
 
                     <form onSubmit={handleRegister} className="space-y-5">
+                        {/* Profile Photo Upload */}
+                        <div className="form-control">
+                            <label className="label">
+                                <span className="label-text font-semibold">Profile Photo</span>
+                            </label>
+                            <ImageUpload 
+                                onImageUpload={(url) => setPhotoURL(url)}
+                                currentImage={photoURL}
+                            />
+                        </div>
+
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             {/* Name */}
                             <div className="form-control">
@@ -110,37 +127,21 @@ const Register = () => {
                                 />
                             </div>
 
-                            {/* Photo URL */}
+                            {/* Email */}
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text font-semibold flex items-center gap-2">
-                                        <FiImage className="w-4 h-4" /> Photo URL
+                                        <FiMail className="w-4 h-4" /> Email Address
                                     </span>
                                 </label>
                                 <input
-                                    type="url"
-                                    name="photo"
-                                    placeholder="https://example.com/photo.jpg"
+                                    type="email"
+                                    name="email"
+                                    placeholder="name@example.com"
                                     className="input input-bordered w-full bg-base-100 focus:border-primary"
                                     required
                                 />
                             </div>
-                        </div>
-
-                        {/* Email */}
-                        <div className="form-control">
-                            <label className="label">
-                                <span className="label-text font-semibold flex items-center gap-2">
-                                    <FiMail className="w-4 h-4" /> Email Address
-                                </span>
-                            </label>
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="name@example.com"
-                                className="input input-bordered w-full bg-base-100 focus:border-primary"
-                                required
-                            />
                         </div>
 
                         {/* Password */}
