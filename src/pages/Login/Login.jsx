@@ -6,12 +6,14 @@ import toast from 'react-hot-toast';
 import { FiMail, FiLock, FiEye, FiEyeOff, FiZap } from "react-icons/fi";
 
 const Login = () => {
-    const { signIn, googleSignIn } = useContext(AuthContext);
+    const { signIn, googleSignIn, resetPassword } = useContext(AuthContext);
     const location = useLocation();
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({ email: "", password: "" });
+    const [showForgotModal, setShowForgotModal] = useState(false);
+    const [resetEmail, setResetEmail] = useState("");
 
     const from = location.state?.from?.pathname || "/";
 
@@ -54,6 +56,25 @@ const Login = () => {
             })
             .catch(error => {
                 toast.error(error.message || 'Google login failed.');
+            })
+            .finally(() => setLoading(false));
+    };
+
+    const handleForgotPassword = (e) => {
+        e.preventDefault();
+        if (!resetEmail) {
+            toast.error('Please enter your email address');
+            return;
+        }
+        setLoading(true);
+        resetPassword(resetEmail)
+            .then(() => {
+                toast.success('Password reset email sent! Check your inbox 📧');
+                setShowForgotModal(false);
+                setResetEmail("");
+            })
+            .catch(error => {
+                toast.error(error.message || 'Failed to send reset email');
             })
             .finally(() => setLoading(false));
     };
@@ -141,7 +162,13 @@ const Login = () => {
                                 </button>
                             </div>
                             <label className="label">
-                                <a href="#" className="label-text-alt link link-hover text-primary">Forgot password?</a>
+                                <button 
+                                    type="button"
+                                    onClick={() => setShowForgotModal(true)}
+                                    className="label-text-alt link link-hover text-primary"
+                                >
+                                    Forgot password?
+                                </button>
                             </label>
                         </div>
 
@@ -184,6 +211,61 @@ const Login = () => {
                     </p>
                 </div>
             </div>
+
+            {/* Forgot Password Modal */}
+            {showForgotModal && (
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+                    <div className="bg-base-100 rounded-2xl shadow-2xl max-w-md w-full p-6 relative">
+                        <button 
+                            onClick={() => setShowForgotModal(false)}
+                            className="absolute top-4 right-4 btn btn-sm btn-circle btn-ghost"
+                        >
+                            ✕
+                        </button>
+                        
+                        <h3 className="text-2xl font-bold text-center mb-2">Reset Password</h3>
+                        <p className="text-base-content/60 text-center mb-6">
+                            Enter your email and we'll send you a reset link
+                        </p>
+                        
+                        <form onSubmit={handleForgotPassword} className="space-y-4">
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text font-semibold flex items-center gap-2">
+                                        <FiMail className="w-4 h-4" /> Email Address
+                                    </span>
+                                </label>
+                                <input
+                                    type="email"
+                                    value={resetEmail}
+                                    onChange={(e) => setResetEmail(e.target.value)}
+                                    placeholder="name@example.com"
+                                    className="input input-bordered w-full"
+                                    required
+                                />
+                            </div>
+                            
+                            <button 
+                                type="submit"
+                                className={`btn btn-primary w-full ${loading ? 'loading' : ''}`}
+                                disabled={loading}
+                            >
+                                {loading ? 'Sending...' : 'Send Reset Link'}
+                            </button>
+                        </form>
+                        
+                        <p className="text-center text-sm text-base-content/60 mt-4">
+                            Remember your password?{' '}
+                            <button 
+                                onClick={() => setShowForgotModal(false)}
+                                className="text-primary font-semibold hover:underline"
+                            >
+                                Sign in
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

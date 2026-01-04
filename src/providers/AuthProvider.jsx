@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
 import auth from "../firebase/firebase.init";
 import axios from "axios";
 
@@ -41,6 +41,10 @@ const AuthProvider = ({ children }) => {
         return updateProfile(auth.currentUser, {
             displayName: name, photoURL: photo
         });
+    }
+
+    const resetPassword = (email) => {
+        return sendPasswordResetEmail(auth, email);
     }
 
     // Save or update user in database
@@ -106,6 +110,7 @@ const AuthProvider = ({ children }) => {
         googleSignIn,
         logOut,
         updateUserProfile,
+        resetPassword,
         saveUserToDB,
         fetchUserRole
     }
