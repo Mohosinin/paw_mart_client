@@ -4,7 +4,7 @@
 
 **Find Your Perfect Companion | Shop Premium Supplies | Join Our Community**
 
-[![Live Demo](https://img.shields.io/badge/🔗_Live_Demo-Visit_Site-blue?style=for-the-badge)](https://paw-mart-client-ugad.vercel.app)
+[![Live Demo](https://img.shields.io/badge/🔗_Live_Demo-Visit_Site-blue?style=for-the-badge)](https://paw-mart-client-beta.vercel.app)
 
 </div>
 
@@ -12,7 +12,7 @@
 
 ## 🌐 Live Site
 
-**👉 [https://paw-mart-client-ugad.vercel.app](https://paw-mart-client-ugad.vercel.app)**
+**👉 [https://paw-mart-client-beta.vercel.app](https://paw-mart-client-beta.vercel.app)**
 
 ---
 
