@@ -1,12 +1,14 @@
-@import "tailwindcss";
-@plugin "daisyui";
+/* Import Google Fonts - must be first */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
-@theme {
-  --font-sans: 'Inter', sans-serif;
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default, dark --prefersdark;
 }
 
 body {
-  font-family: var(--font-sans);
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  scroll-behavior: smooth;
 }
 
 /* Custom Scrollbar */
@@ -19,16 +21,90 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: oklch(var(--p)); /* Primary color */
+  background: oklch(var(--p));
   border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: oklch(var(--pf)); /* Primary focus/darker */
+  background: oklch(var(--pf));
 }
 
 /* Selection Color */
 ::selection {
   background-color: oklch(var(--p));
   color: oklch(var(--pc));
+}
+
+/* Custom Card Hover Effect */
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}
+
+/* Focus States for Accessibility */
+:focus-visible {
+  outline: 2px solid oklch(var(--p));
+  outline-offset: 2px;
+}
+
+/* Button Improvements */
+.btn {
+  transition: all 0.2s ease;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* Input Focus States */
+.input:focus,
+.select:focus,
+.textarea:focus {
+  border-color: oklch(var(--p));
+}
+
+/* Glass Effect */
+.glass {
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Badge Improvements */
+.badge {
+  font-weight: 600;
+}
+
+/* Card Body Consistent Spacing */
+.card-body {
+  gap: 0.5rem;
+}
+
+/* Dropdown Animation */
+.dropdown-content {
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile Touch Improvements */
+@media (hover: none) {
+  .card:hover {
+    transform: none;
+  }
+  
+  .btn:active {
+    transform: scale(0.95);
+  }
 }
